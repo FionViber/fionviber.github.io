@@ -43,7 +43,18 @@ body {
     transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 
-.project-card > span:first-child { max-width: 18ch; align-self: center; font-size: clamp(16px, 1.8vw, 20px); font-weight: 560; line-height: 1.35; letter-spacing: -.035em; text-align: center; text-decoration: none; }
+.project-card > span:first-child {
+    width: 100%;
+    min-width: 0;
+    align-self: center;
+    font-size: clamp(16px, 1.8vw, 20px);
+    font-weight: 560;
+    line-height: 1.35;
+    letter-spacing: -.035em;
+    text-align: center;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
 .arrow {
     position: absolute;
     bottom: 16px;
