@@ -23,12 +23,12 @@ body {
 .project-grid {
     width: min(1080px, 100%);
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
 }
 
 .project-card {
-    grid-column: span 2;
+    grid-column: auto;
     min-height: 184px;
     padding: 24px;
     display: flex;
@@ -42,8 +42,6 @@ body {
     transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 
-.project-card:nth-last-child(2) { grid-column: 2 / span 2; }
-.project-card:last-child { grid-column: 4 / span 2; }
 .project-card > span:first-child { max-width: 18ch; font-size: clamp(16px, 1.8vw, 20px); font-weight: 560; line-height: 1.35; letter-spacing: -.035em; }
 .arrow {
     flex: 0 0 auto;
@@ -69,16 +67,17 @@ body {
 .tone-green { background: linear-gradient(145deg, #eff4eb, #e8f0e4); }
 .tone-violet { background: linear-gradient(145deg, #f1eff7, #e8eaf2); }
 .tone-sand { background: linear-gradient(145deg, #f5f1e8, #f0ebdf); }
+.tone-slate { background: linear-gradient(145deg, #eef1f2, #e8edef); }
 
 @media (max-width: 820px) {
-    .project-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .project-card:nth-last-child(2), .project-card:last-child { grid-column: span 2; }
+    .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .project-card:last-child { grid-column: 1 / -1; width: calc(50% - 8px); justify-self: center; }
     .project-card { min-height: 166px; padding: 20px; }
 }
 @media (max-width: 560px) {
     body { padding: 24px 18px; }
-    .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .project-card, .project-card:nth-last-child(2), .project-card:last-child { grid-column: span 1; min-height: 142px; padding: 16px; border-radius: 16px; }
+    .project-grid { grid-template-columns: 1fr; gap: 12px; }
+    .project-card, .project-card:last-child { grid-column: auto; width: 100%; min-height: 142px; padding: 16px; border-radius: 16px; }
     .project-card > span:first-child { font-size: 15px; }
     .arrow { width: 29px; height: 29px; font-size: 12px; }
 }
