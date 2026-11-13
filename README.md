@@ -1,5 +1,7 @@
-# FionViber — Selected Projects
+# FionViber
 
-Personal project directory: [fionviber.github.io](https://fionviber.github.io/).
+[Open the website](https://fionviber.github.io/)
 
-This static site is published from the root of the `main` branch with GitHub Pages.
+A personal directory of browser tools and games, with individual project guides and local search. English is the default; Simplified and Traditional Chinese are available in the footer.
+
+Publish the repository root with GitHub Pages. All website styles and scripts are local; project links open their own sites. No build service or application server is required.
