@@ -1,0 +1,67 @@
+import { messages } from "./messages.js";
+import { escapeHTML, pageURL, languageIndex, searchProjects } from "./model.js";
+
+export function renderPage(view, projects, baseURL) {
+  const P = projects,
+    page = view.page,
+    lang = view.lang,
+    ix = languageIndex(lang),
+    params = view.url.searchParams;
+  const t = (key) => messages[lang][key];
+  const esc = escapeHTML;
+  const link = (path, query = {}) =>
+    esc(pageURL(path, baseURL, lang, query).href);
+  const name = (p) => p.names[ix],
+    desc = (p) => p.descriptions[ix],
+    cat = (p) => t(p.category === "tool" ? "tools" : "games");
+  const arrow = '<span aria-hidden="true">↗</span>';
+  const cardHeading = page === "detail" ? "h3" : "h2";
+  const card = (p) =>
+    `<article class="project-card"><p class="eyebrow">${cat(p)}</p><${cardHeading}>${esc(name(p))}</${cardHeading}><p>${esc(desc(p))}</p><div class="card-actions"><a class="card-button card-details" href="${link("projects/" + p.id + ".html")}">${t("read")}<span class="sr-only"> — ${esc(name(p))}</span></a><a class="card-button card-open" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">${t("open")}<span class="sr-only"> — ${esc(name(p))}</span></a></div></article>`;
+  const navItem = (key, path) =>
+    `<a href="${link(path)}" ${page === (key === "tools" ? "tool" : key === "games" ? "game" : key) ? 'aria-current="page"' : ""}>${t(key)}</a>`;
+  const header = `<a class="skip-link" href="${esc(view.url.pathname + view.url.search)}#main">${t("skip")}</a><header class="masthead"><div class="wrap mast-inner"><div class="brand-group"><a class="brand" href="${link("index.html")}"><span class="brand-name">FionViber</span></a><div class="brand-meta"><span class="tagline">${t("tag")}</span><label class="language-control"><span class="sr-only">${t("language")}</span><select id="language"><option value="en"${lang === "en" ? " selected" : ""}>English</option><option value="zh"${lang === "zh" ? " selected" : ""}>简体中文</option><option value="tw"${lang === "tw" ? " selected" : ""}>繁體中文</option></select></label></div></div><form class="search-form" id="search-form" role="search" action="${link("search.html")}" method="get"><input type="hidden" name="lang" value="${lang}"><label class="sr-only" for="query">${t("searchLabel")}</label><input id="query" name="q" type="search" maxlength="120" placeholder="${t("searchLabel")}" value="${esc(params.get("q") || "")}"><button class="search-submit" type="submit" aria-controls="query" aria-expanded="false" aria-label="${t("search")}"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button><button class="search-close" type="button" aria-label="${t("close")}">×</button></form></div><nav class="main-nav" aria-label="${t("home")}"><div class="wrap nav-inner">${navItem("home", "index.html")}${navItem("tools", "tools.html")}${navItem("games", "games.html")}${navItem("about", "about.html")}</div></nav></header>`;
+  const footer = `<footer><div class="wrap footer-main"><a class="footer-brand" href="${link("index.html")}">FionViber</a><a href="https://github.com/FionViber" target="_blank" rel="noopener noreferrer">${t("github")} ${arrow}</a><span>© 2026 FionViber</span></div></footer>`;
+  let content = "",
+    title = "FionViber";
+  if (page === "home") {
+    content = `<section class="hero welcome"><h1>${t("intro")}</h1><p>${t("introText")}</p><p>${t("introGuide")}</p></section>`;
+  } else if (page === "tool" || page === "game") {
+    const key = page === "tool" ? "tools" : "games";
+    title = t(key);
+    content = `<header class="page-heading"><p class="eyebrow">FionViber</p><h1>${t(key)}</h1><p>${t(key + "Text")}</p></header><div class="project-grid">${P.filter(
+      (p) => p.category === page,
+    )
+      .map(card)
+      .join("")}</div>`;
+  } else if (page === "detail") {
+    const p = P.find((p) => p.id === view.id);
+    if (p) {
+      title = name(p);
+      const others = P.filter(
+        (a) => a.category === p.category && a.id !== p.id,
+      ).slice(0, 3);
+      content = `<nav class="breadcrumbs" aria-label="${t("back")}"><a href="${link("index.html")}">${t("home")}</a><span aria-hidden="true">/</span><a href="${link(p.category === "tool" ? "tools.html" : "games.html")}">${cat(p)}</a></nav><article class="detail"><header><p class="eyebrow">${cat(p)}</p><h1>${esc(name(p))}</h1><p class="detail-lead">${esc(desc(p))}</p><div class="action-row"><a class="button" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">${t("open")} ${arrow}</a><a class="text-link" href="${esc(p.repo)}" target="_blank" rel="noopener noreferrer">${t("source")} ${arrow}</a></div></header><div class="detail-layout"><div class="detail-copy"><h2>${t("start")}</h2><p>${esc(p.tips[ix])}</p><h2>${t("storageTitle")}</h2><p>${t("storage")}</p>${(p.links || []).map((item) => `<p><a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${esc(item.labels[ix])} ↗</a></p>`).join("")}</div><dl class="facts"><div><dt>${t("category")}</dt><dd>${cat(p)}</dd></div><div><dt>${t("access")}</dt><dd>${t(p.protected ? "protected" : "public")}</dd></div><div><dt>${t("platform")}</dt><dd>${t("browser")}</dd></div></dl></div></article><section class="project-section"><h2>${t("related")}</h2><div class="project-grid related-grid">${others.map(card).join("")}</div></section>`;
+    }
+  } else if (page === "search") {
+    title = t("results");
+    const query = (params.get("q") || "").trim().slice(0, 120);
+    const matches = searchProjects(P, query);
+    content = `<header class="page-heading"><p class="eyebrow">${t("search")}</p><h1>${query ? t("results") : t("prompt")}</h1>${query ? `<p>${t("for")} “${esc(query)}” · ${matches.length} ${lang === "en" && matches.length === 1 ? "project" : t("projects")}</p><a class="text-link" href="${link("search.html")}">${t("clear")}</a>` : `<p>${t("try")}</p>`}</header>${query && matches.length ? `<div class="project-grid">${matches.map(card).join("")}</div>` : query ? `<section class="empty"><h2>${t("none")}</h2><p>${t("try")}</p><a href="${link("index.html")}">${t("back")} →</a></section>` : ""}`;
+  } else if (page === "about") {
+    title = t("about");
+    content = `<article class="prose"><p class="eyebrow">FionViber</p><h1>${t("aboutTitle")}</h1><p>${t("aboutText")}</p><h2>${t("start")}</h2><p>${t("aboutUse")}</p><h2>${t("source")}</h2><p>${t("aboutSource")}</p><a class="button" href="https://github.com/FionViber" target="_blank" rel="noopener noreferrer">${t("github")} ${arrow}</a></article>`;
+  }
+  if (!content) {
+    title = t("notFound");
+    content = `<section class="empty"><h1>${title}</h1><p>${t("notFoundText")}</p><a class="button" href="${link("index.html")}">${t("back")}</a></section>`;
+  }
+
+  return {
+    html:
+      header +
+      `<main class="wrap" id="main" tabindex="-1">${content}</main>` +
+      footer,
+    title: title === "FionViber" ? title : title + " · FionViber",
+  };
+}

@@ -1,0 +1,408 @@
+[
+  {
+    "id": "xiaohammer-converter",
+    "category": "tool",
+    "names": [
+      "XiaoHammer Chinese Converter",
+      "小锤中文转换器",
+      "小錘中文轉換器"
+    ],
+    "descriptions": [
+      "A compact browser utility for converting Chinese text.",
+      "用于转换中文文本的轻量浏览器工具。",
+      "用於轉換中文文字的輕量瀏覽器工具。"
+    ],
+    "url": "https://fionviber.github.io/XiaoHammerChineseConverter/",
+    "repo": "https://github.com/FionViber/XiaoHammerChineseConverter",
+    "protected": false,
+    "tips": [
+      "Paste your text, choose the conversion you need, then copy the result.",
+      "粘贴文本，选择转换方式，再复制结果。",
+      "貼上文字，選擇轉換方式，再複製結果。"
+    ]
+  },
+  {
+    "id": "xiaohammer-qrcode",
+    "category": "tool",
+    "names": [
+      "XiaoHammer QR Code",
+      "小锤二维码",
+      "小錘 QR Code"
+    ],
+    "descriptions": [
+      "Create QR codes directly in the browser.",
+      "直接在浏览器中生成二维码。",
+      "直接在瀏覽器中產生 QR Code。"
+    ],
+    "url": "https://fionviber.github.io/XiaoHammerQRCode/",
+    "repo": "https://github.com/FionViber/XiaoHammerQRCode",
+    "protected": false,
+    "tips": [
+      "Enter the content for your QR code and use the tool’s export controls to save it.",
+      "输入二维码内容，生成后使用导出功能保存。",
+      "輸入 QR Code 內容，產生後使用匯出功能儲存。"
+    ]
+  },
+  {
+    "id": "webpp",
+    "category": "tool",
+    "names": [
+      "WebPP",
+      "WebPP 图像编辑器",
+      "WebPP 影像編輯器"
+    ],
+    "descriptions": [
+      "A password-protected offline image editor running in your browser.",
+      "在浏览器中运行的加密离线图像编辑器。",
+      "在瀏覽器中執行的加密離線影像編輯器。"
+    ],
+    "url": "https://fionviber.github.io/WebPP/",
+    "repo": "https://github.com/FionViber/WebPP",
+    "protected": true,
+    "tips": [
+      "Unlock the editor, create a document or open a local image, then export the finished file. Its bundled application is large, so the first load can take a little time.",
+      "解锁后新建文档或打开本地图片，编辑完成后导出文件。应用包含较大的资源包，首次加载需要一些时间。",
+      "解鎖後新增文件或開啟本機圖片，編輯完成後匯出檔案。應用包含較大的資源包，首次載入需要一些時間。"
+    ]
+  },
+  {
+    "id": "randomkit",
+    "category": "tool",
+    "names": [
+      "RandomKit",
+      "随机工具集",
+      "隨機工具集"
+    ],
+    "descriptions": [
+      "Names, teams, numbers, dice, coins and prize wheels.",
+      "姓名、分组、数字、骰子、硬币和抽奖转盘工具。",
+      "姓名、分組、數字、骰子、硬幣與抽獎轉盤工具。"
+    ],
+    "url": "https://fionviber.github.io/RandomKit/",
+    "repo": "https://github.com/FionViber/RandomKit",
+    "protected": false,
+    "tips": [
+      "Choose name picking, a prize wheel, team allocation, list shuffling, random numbers, dice or coins. Add a participant list only for tools that need one.",
+      "选择抽签、转盘、分组、打乱列表、随机数字、骰子或硬币。需要名单的功能再添加参与者即可。",
+      "選擇抽籤、轉盤、分組、打亂清單、隨機數字、骰子或硬幣。需要名單的功能再加入參與者即可。"
+    ]
+  },
+  {
+    "id": "crowdlab",
+    "category": "tool",
+    "names": [
+      "CrowdLab",
+      "人流模拟实验室",
+      "人流模擬實驗室"
+    ],
+    "descriptions": [
+      "An interactive crowd-flow simulator with editable layouts.",
+      "可编辑布局的人流模拟工具。",
+      "可編輯佈局的人流模擬工具。"
+    ],
+    "url": "https://fionviber.github.io/CrowdLab/",
+    "repo": "https://github.com/FionViber/CrowdLab",
+    "protected": false,
+    "tips": [
+      "Choose a room layout, adjust the population and walking speed, then watch the flow through the exit. Pause to inspect the scene or export measurements as CSV.",
+      "选择房间布局，调整人数和行走速度，观察出口的人流。可暂停检查场景，或将测量结果导出为 CSV。",
+      "選擇房間佈局，調整人數與行走速度，觀察出口的人流。可暫停檢查場景，或將量測結果匯出為 CSV。"
+    ]
+  },
+  {
+    "id": "plancraft",
+    "category": "tool",
+    "names": [
+      "PlanCraft",
+      "平面设计器",
+      "平面設計器"
+    ],
+    "descriptions": [
+      "Design floor plans in 2D and 3D, entirely offline.",
+      "完全离线的二维与三维平面设计工具。",
+      "完全離線的 2D 與 3D 平面設計工具。"
+    ],
+    "url": "https://fionviber.github.io/PlanCraft/",
+    "repo": "https://github.com/FionViber/PlanCraft",
+    "protected": false,
+    "tips": [
+      "Arrange furniture in the 2D plan, then switch to the 3D scene to inspect the layout. The File menu exports images and plan data. All 3D components are bundled for offline use.",
+      "在二维平面图中布置家具，再切换至三维场景查看效果。文件菜单可导出图片和方案数据，所有三维组件均已内嵌，可离线使用。",
+      "在二維平面圖中佈置家具，再切換至三維場景查看效果。檔案選單可匯出圖片與方案資料，所有三維元件均已內嵌，可離線使用。"
+    ]
+  },
+  {
+    "id": "quiz-party",
+    "category": "game",
+    "names": [
+      "Quiz Party",
+      "问答派对",
+      "問答派對"
+    ],
+    "descriptions": [
+      "A browser quiz game for group play.",
+      "适合多人一起玩的浏览器问答游戏。",
+      "適合多人一起玩的瀏覽器問答遊戲。"
+    ],
+    "url": "https://fionviber.github.io/quiz-party/",
+    "repo": "https://github.com/FionViber/quiz-party",
+    "protected": false,
+    "tips": [
+      "Open the game and follow its setup to prepare a quiz session. Use the in-game prompts to manage questions and rounds.",
+      "打开游戏并按照设置流程准备问答活动，使用游戏内提示管理题目和回合。",
+      "開啟遊戲並依照設定流程準備問答活動，使用遊戲內提示管理題目與回合。"
+    ]
+  },
+  {
+    "id": "webcs16",
+    "category": "game",
+    "names": [
+      "WebCS16",
+      "网页 CS 1.6",
+      "網頁 CS 1.6"
+    ],
+    "descriptions": [
+      "A browser-based Counter-Strike 1.6 port.",
+      "可在浏览器中运行的 CS 1.6 复刻版。",
+      "可在瀏覽器中執行的 CS 1.6 複刻版。"
+    ],
+    "url": "https://fionviber.github.io/WebCS16/",
+    "repo": "https://github.com/FionViber/WebCS16",
+    "protected": true,
+    "tips": [
+      "Choose your launch settings before entering the game. A keyboard and mouse are recommended; use the game’s own options for controls and language.",
+      "先选择启动设置，再进入游戏。建议使用键盘和鼠标，操作和语言在游戏内设置。",
+      "先選擇啟動設定，再進入遊戲。建議使用鍵盤與滑鼠，操作與語言在遊戲內設定。"
+    ]
+  },
+  {
+    "id": "webtrad",
+    "category": "game",
+    "names": [
+      "The Roottrees Are Dead",
+      "The Roottrees Are Dead",
+      "The Roottrees Are Dead"
+    ],
+    "descriptions": [
+      "A family-tree mystery built around documents, clues and deduction.",
+      "围绕文件、线索和推理展开的家族谱系解谜游戏。",
+      "圍繞文件、線索與推理展開的家族譜系解謎遊戲。"
+    ],
+    "url": "https://fionviber.github.io/WebTRAD/",
+    "repo": "https://github.com/FionViber/WebTRAD",
+    "protected": true,
+    "tips": [
+      "Explore documents and clues to reconstruct the Roottree family tree. Open the game’s menus for its controls and progress options.",
+      "查看文件与线索，重建 Roottree 家族谱系。操作和进度选项可在游戏菜单中查看。",
+      "查看文件與線索，重建 Roottree 家族譜系。操作與進度選項可在遊戲選單中查看。"
+    ]
+  },
+  {
+    "id": "webmc",
+    "category": "game",
+    "names": [
+      "WebMC",
+      "网页 Minecraft",
+      "網頁 Minecraft"
+    ],
+    "descriptions": [
+      "Minecraft, playable in the browser.",
+      "可以在浏览器中运行的 Minecraft 网页版。",
+      "可在瀏覽器中執行的 Minecraft 網頁版。"
+    ],
+    "url": "https://fionviber.github.io/WebMC/",
+    "repo": "https://github.com/FionViber/WebMC",
+    "protected": true,
+    "tips": [
+      "Unlock the page and use the game’s menus to start a session. This browser build loads its game resources separately; allow the initial download to finish.",
+      "解锁页面后，通过游戏菜单开始游玩。此网页版会分别加载游戏资源，请等待首次下载完成。",
+      "解鎖頁面後，透過遊戲選單開始遊玩。此網頁版會分別載入遊戲資源，請等待首次下載完成。"
+    ]
+  },
+  {
+    "id": "webglyphica",
+    "category": "game",
+    "names": [
+      "WebGlyphica",
+      "WebGlyphica",
+      "WebGlyphica"
+    ],
+    "descriptions": [
+      "A keyboard-driven typing survival game.",
+      "以键盘打字操作的生存游戏。",
+      "以鍵盤打字操作的生存遊戲。"
+    ],
+    "url": "https://fionviber.github.io/WebGlyphica/",
+    "repo": "https://github.com/FionViber/WebGlyphica",
+    "protected": true,
+    "tips": [
+      "A typing game built around quick, accurate keyboard input. Use a physical keyboard for the main gameplay.",
+      "以快速、准确的键盘输入为核心的打字游戏，主要玩法建议使用实体键盘。",
+      "以快速、準確的鍵盤輸入為核心的打字遊戲，主要玩法建議使用實體鍵盤。"
+    ]
+  },
+  {
+    "id": "gradient-descent",
+    "category": "game",
+    "names": [
+      "Gradient Descent",
+      "Gradient Descent",
+      "Gradient Descent"
+    ],
+    "descriptions": [
+      "A single-player browser game.",
+      "单人浏览器游戏。",
+      "單人瀏覽器遊戲。"
+    ],
+    "url": "https://fionviber.github.io/Gradient-Descent/?config=single-player.json",
+    "repo": "https://github.com/FionViber/Gradient-Descent",
+    "protected": false,
+    "tips": [
+      "The launch link opens the single-player configuration. Follow the instructions inside the game to begin.",
+      "启动链接会打开单人配置，按照游戏内的说明开始即可。",
+      "啟動連結會開啟單人設定，依照遊戲內的說明開始即可。"
+    ]
+  },
+  {
+    "id": "websdv",
+    "category": "game",
+    "names": [
+      "WebSDV",
+      "网页星露谷物语",
+      "網頁星露谷物語"
+    ],
+    "descriptions": [
+      "A browser build of Stardew Valley.",
+      "星露谷物语网页版本。",
+      "星露谷物語網頁版本。"
+    ],
+    "url": "https://fionviber.github.io/WebSDV/",
+    "repo": "https://github.com/FionViber/WebSDV",
+    "protected": true,
+    "tips": [
+      "Start the browser build and wait for its content and audio resources to load. A desktop browser with a keyboard is recommended.",
+      "打开网页版并等待游戏内容和音频资源加载。建议使用配有键盘的桌面浏览器。",
+      "開啟網頁版並等待遊戲內容與音訊資源載入。建議使用配有鍵盤的桌面瀏覽器。"
+    ]
+  },
+  {
+    "id": "webtf",
+    "category": "game",
+    "names": [
+      "WebTF",
+      "旅行青蛙",
+      "旅行青蛙"
+    ],
+    "descriptions": [
+      "Travel Frog: China Journey in the browser.",
+      "旅行青蛙：中国之旅网页版本。",
+      "旅行青蛙：中國之旅網頁版本。"
+    ],
+    "url": "https://fionviber.github.io/WebTF/",
+    "repo": "https://github.com/FionViber/WebTF",
+    "protected": true,
+    "tips": [
+      "The original Simplified Chinese edition is preserved. Use its save controls to export progress before changing browser or device.",
+      "保留原版简体中文内容。更换浏览器或设备前，请通过存档功能导出进度。",
+      "保留原版簡體中文內容。更換瀏覽器或裝置前，請透過存檔功能匯出進度。"
+    ]
+  },
+  {
+    "id": "webmh",
+    "category": "game",
+    "names": [
+      "WebMH",
+      "Merge Haven",
+      "Merge Haven"
+    ],
+    "descriptions": [
+      "A cosy merge puzzle game in the browser.",
+      "可以在浏览器中玩的合并益智游戏。",
+      "可在瀏覽器中遊玩的合併益智遊戲。"
+    ],
+    "url": "https://fionviber.github.io/WebMH/",
+    "repo": "https://github.com/FionViber/WebMH",
+    "protected": true,
+    "tips": [
+      "Merge items, fulfil orders and develop the board. New sessions start in English; the game’s settings also offer Simplified Chinese. Export a save before changing devices.",
+      "合并物品、完成订单并发展棋盘。新会话默认英文，也可在游戏设置中选择简体中文。更换设备前请导出存档。",
+      "合併物品、完成訂單並發展棋盤。新工作階段預設英文，也可在遊戲設定中選擇簡體中文。更換裝置前請匯出存檔。"
+    ]
+  },
+  {
+    "id": "webpvz",
+    "category": "game",
+    "names": [
+      "WebPVZ",
+      "植物大战僵尸",
+      "植物大戰殭屍"
+    ],
+    "descriptions": [
+      "Plants vs. Zombies: Game of the Year Edition in the browser.",
+      "植物大战僵尸年度版网页版本。",
+      "植物大戰殭屍年度版網頁版本。"
+    ],
+    "url": "https://fionviber.github.io/WebPVZ/",
+    "repo": "https://github.com/FionViber/WebPVZ",
+    "protected": true,
+    "tips": [
+      "Play the English browser edition, or use the repository’s Releases page for English and Simplified Chinese desktop downloads. Desktop packages do not use the web password screen.",
+      "在线玩英文版，或前往仓库的 Releases 下载英文、简体中文桌面版。桌面包没有网页密码界面。",
+      "線上遊玩英文版，或前往儲存庫的 Releases 下載英文、簡體中文桌面版。桌面套件沒有網頁密碼介面。"
+    ]
+  },
+  {
+    "id": "websddyx",
+    "category": "game",
+    "names": [
+      "Sultan’s Game",
+      "苏丹的游戏",
+      "蘇丹的遊戲"
+    ],
+    "descriptions": [
+      "A browser remake of the SDDYX game.",
+      "苏丹的游戏网页复刻版。",
+      "蘇丹的遊戲網頁複刻版。"
+    ],
+    "url": "https://fionviber.github.io/WebSDDYX/",
+    "repo": "https://github.com/FionViber/WebSDDYX",
+    "protected": true,
+    "tips": [
+      "Start a new game or continue from a browser save. Progress through the opening story and use the card-based interface to make decisions. The first visit downloads a substantial set of game resources. Continue becomes available when the first round begins; the opening introduction alone does not enable it.",
+      "开始新游戏或继续浏览器存档，推进开场剧情，并通过卡牌界面作出选择。首次访问需要下载较多游戏资源。 正式第一回合开始后才会启用“继续游戏”，仅进入开场介绍不会启用。",
+      "開始新遊戲或繼續瀏覽器存檔，推進開場劇情，並透過卡牌介面作出選擇。首次造訪需要下載較多遊戲資源。 正式第一回合開始後才會啟用「繼續遊戲」，僅進入開場介紹不會啟用。"
+    ]
+  },
+  {
+    "id": "websaltline",
+    "category": "game",
+    "names": [
+      "Saltline",
+      "Saltline",
+      "Saltline"
+    ],
+    "descriptions": [
+      "A first-person shooter set in a rainy container port.",
+      "以雨中集装箱港口为舞台的第一人称射击游戏。",
+      "以雨中貨櫃港口為舞台的第一人稱射擊遊戲。"
+    ],
+    "url": "https://fionviber.github.io/WebSaltLine/",
+    "repo": "https://github.com/FionViber/WebSaltLine",
+    "protected": true,
+    "tips": [
+      "Deploy into the port, cut three uplink relays and reach the boat. Use WASD to move, the mouse to aim, E to interact and Esc or P to pause. Arrow keys or IJKL can turn the view if mouse capture is unavailable.",
+      "进入港口，切断三个中继并抵达船只。WASD 移动，鼠标瞄准，E 互动，Esc 或 P 暂停；无法捕获鼠标时可用方向键或 IJKL 转动视角。",
+      "進入港口，切斷三個中繼並抵達船隻。WASD 移動，滑鼠瞄準，E 互動，Esc 或 P 暫停；無法擷取滑鼠時可用方向鍵或 IJKL 轉動視角。"
+    ],
+    "links": [
+      {
+        "labels": [
+          "Upstream source",
+          "上游来源",
+          "上游來源"
+        ],
+        "url": "https://github.com/realcodebear/saltline-fable-5.2"
+      }
+    ]
+  }
+]

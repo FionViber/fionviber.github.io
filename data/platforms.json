@@ -1,0 +1,28 @@
+{
+  "github": {
+    "baseUrl": "https://fionviber.github.io/"
+  },
+  "cloudflare": {
+    "baseUrl": "https://fionviber.pages.dev/",
+    "launchUrls": {
+      "xiaohammer-converter": "https://xiaohammer-converter.pages.dev/",
+      "xiaohammer-qrcode": "https://xiaohammer-qrcode.pages.dev/",
+      "webpp": "https://webpp-w9m.pages.dev/",
+      "randomkit": "https://randomkit-jgm.pages.dev/",
+      "crowdlab": "https://crowdlab.pages.dev/",
+      "plancraft": "https://plancraft-8xg.pages.dev/",
+      "quiz-party": "https://quiz-party-cpt.pages.dev/",
+      "webcs16": "https://webcs16.pages.dev/",
+      "webtrad": "https://webtrad.pages.dev/",
+      "webmc": "https://webmceagle.pages.dev/",
+      "webglyphica": "https://webglyphica.pages.dev/",
+      "gradient-descent": "https://gradient-descent-51m.pages.dev/?config=single-player.json",
+      "websdv": "https://websdv.pages.dev/",
+      "webtf": "https://webtf.pages.dev/",
+      "webmh": "https://webmh.pages.dev/",
+      "webpvz": "https://webpvz-12z.pages.dev/",
+      "websddyx": "https://websddyx.pages.dev/",
+      "websaltline": "https://websaltline.pages.dev/"
+    }
+  }
+}
