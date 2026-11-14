@@ -23,6 +23,13 @@ const preferences = {
 };
 let current = resolveView(location.href, baseURL, projects, preferences.read());
 let searchOpen = false;
+const scrollPositions = new Map();
+let currentEntry = history.state?.catalogEntry || crypto.randomUUID();
+history.replaceState(
+  { ...history.state, catalogEntry: currentEntry },
+  "",
+  location.href,
+);
 
 function syncSearch() {
   const form = app.querySelector("#search-form");
@@ -45,8 +52,13 @@ function render(view, draft) {
 }
 
 function rememberScroll() {
+  scrollPositions.set(currentEntry, [scrollX, scrollY]);
   history.replaceState(
-    { ...history.state, catalogScroll: [scrollX, scrollY] },
+    {
+      ...history.state,
+      catalogEntry: currentEntry,
+      catalogScroll: [scrollX, scrollY],
+    },
     "",
     location.href,
   );
@@ -54,7 +66,13 @@ function rememberScroll() {
 
 async function navigate(
   destination,
-  { replace = false, restore, focus = "main", preserveDraft = false } = {},
+  {
+    replace = false,
+    restore,
+    focus = "main",
+    preserveDraft = false,
+    entry,
+  } = {},
 ) {
   let view = resolveView(destination, baseURL, projects, current.lang);
   if (view.redirect)
@@ -65,11 +83,14 @@ async function navigate(
   const applied = await transition(() => {
     if (!restore) {
       rememberScroll();
+      currentEntry = replace ? currentEntry : crypto.randomUUID();
       history[replace ? "replaceState" : "pushState"](
-        { catalogScroll: scroll },
+        { catalogEntry: currentEntry, catalogScroll: scroll },
         "",
         view.url,
       );
+    } else {
+      currentEntry = entry || crypto.randomUUID();
     }
     current = view;
     render(current, draft);
@@ -166,9 +187,14 @@ mobile.addEventListener("change", () => {
   syncSearch();
 });
 history.scrollRestoration = "manual";
-addEventListener("popstate", (event) =>
-  navigate(location.href, { restore: event.state?.catalogScroll || [0, 0] }),
-);
+addEventListener("popstate", (event) => {
+  scrollPositions.set(currentEntry, [scrollX, scrollY]);
+  const entry = event.state?.catalogEntry;
+  navigate(location.href, {
+    entry,
+    restore: scrollPositions.get(entry) || event.state?.catalogScroll || [0, 0],
+  });
+});
 if (current.redirect) {
   history.replaceState(history.state, "", current.redirect);
   current = resolveView(current.redirect, baseURL, projects, current.lang);
