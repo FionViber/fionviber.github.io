@@ -4,3 +4,18 @@
 
 /* Navigation and project actions, November 2026. */
 #app{min-height:100svh;display:flex;flex-direction:column}#app>main{flex:1}.brand-group{min-width:0}.brand-meta{display:flex;align-items:center;flex-wrap:wrap;gap:6px 16px;margin-top:4px}.brand-meta .tagline{margin:0}.language-control{display:inline-flex;align-items:center;min-height:44px}.language-control select{min-height:44px;max-width:100%;padding:8px 30px 8px 10px;border:1px solid #b5c8d7;background:#fff;color:var(--ink);font-size:14px}.mast-inner{padding-block:16px}.card-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:auto;padding-top:24px}.card-button{display:flex;justify-content:center;align-items:center;min-height:44px;padding:9px 8px;border:1px solid var(--blue);text-align:center;font-size:14px;font-weight:600;line-height:1.4}.card-details{background:white;color:var(--blue)}.card-open{background:var(--blue);color:white}.card-button:hover{text-decoration:none;background:var(--navy);color:white}.project-card h3{overflow-wrap:anywhere}.welcome{padding-block:48px}.welcome>p{max-width:760px}.footer-main{border-bottom:0;padding-block:24px}@media(max-width:620px){.brand-meta{margin-top:4px}.language-control select{width:140px}.mast-inner{min-height:120px}.welcome{padding:28px 22px}.card-actions{gap:8px}.card-button{font-size:13px;padding-inline:6px}}
+
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:page-out .18s ease both}
+::view-transition-new(root){animation:page-in .28s cubic-bezier(.22,.61,.36,1) both}
+@keyframes page-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes page-out{from{opacity:1}to{opacity:0;transform:translateY(-4px)}}
+.project-card,.button,.card-button,.nav-inner a,.language-control select,.search-form,.brand,.footer-main a{transition:background-color .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease,transform .2s ease,opacity .2s ease}
+.project-card{animation:card-in .38s cubic-bezier(.22,.61,.36,1) both}
+.project-card:nth-child(2){animation-delay:.035s}.project-card:nth-child(3){animation-delay:.07s}.project-card:nth-child(4){animation-delay:.105s}.project-card:nth-child(5){animation-delay:.14s}.project-card:nth-child(6){animation-delay:.175s}.project-card:nth-child(7){animation-delay:.21s}.project-card:nth-child(8){animation-delay:.245s}.project-card:nth-child(9){animation-delay:.28s}.project-card:nth-child(10){animation-delay:.315s}.project-card:nth-child(11){animation-delay:.35s}.project-card:nth-child(12){animation-delay:.385s}
+@keyframes card-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.project-card:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(21,46,72,.12)}
+.card-button:hover,.button:hover,.nav-inner a:hover{transform:translateY(-1px)}
+.search-form:focus-within{box-shadow:0 0 0 3px rgba(7,85,140,.16)}
+.language-control select:focus-visible,.card-button:focus-visible,.button:focus-visible{box-shadow:0 0 0 3px rgba(7,85,140,.18)}
+@media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root),.project-card{animation:none}.project-card,.button,.card-button,.nav-inner a,.language-control select,.search-form,.brand,.footer-main a{transition:none}.project-card:hover,.card-button:hover,.button:hover,.nav-inner a:hover{transform:none}}
