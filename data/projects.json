@@ -132,6 +132,50 @@
     ]
   },
   {
+    "id": "text-counter",
+    "names": [
+      "Text Counter",
+      "字数统计",
+      "字數統計"
+    ],
+    "descriptions": [
+      "Compare word and character counts for multilingual text.",
+      "比较多语言文本的字数和字符数。",
+      "比較多語文字的字數和字元數。"
+    ],
+    "tips": [
+      "Paste your text to compare Word-compatible, Unicode and linguistic counts. The tool also counts Han characters, sentences, paragraphs and lines.",
+      "粘贴文本即可比较 Word 兼容、Unicode 和语言分词三种计数结果，也可查看汉字、句子、段落和行数。",
+      "貼上文字即可比較 Word 相容、Unicode 和語言斷詞三種計數結果，也可查看漢字、句子、段落與行數。"
+    ],
+    "category": "tool",
+    "url": "https://fionviber.github.io/TextCounter/",
+    "repo": "https://github.com/FionViber/TextCounter",
+    "protected": false
+  },
+  {
+    "id": "offline-translator",
+    "names": [
+      "Offline Translator",
+      "离线翻译",
+      "離線翻譯"
+    ],
+    "descriptions": [
+      "Translate locally in your browser with Firefox BASE models for eight languages.",
+      "使用 Firefox BASE 模型，在浏览器内翻译八种语言。",
+      "使用 Firefox BASE 模型，在瀏覽器內翻譯八種語言。"
+    ],
+    "tips": [
+      "Choose a direction and select Translate to download its models on first use. Directions labelled ‘via English’ use two local translation steps.",
+      "选择方向并点击翻译，首次使用时会下载所需模型。标有“经英语中转”的方向会在本地分两步翻译。",
+      "選擇方向並點選翻譯，首次使用時會下載所需模型。標有「經英語轉譯」的方向會在本機分兩步翻譯。"
+    ],
+    "category": "tool",
+    "url": "https://fionviber.github.io/OfflineTranslator/",
+    "repo": "https://github.com/FionViber/OfflineTranslator",
+    "protected": false
+  },
+  {
     "id": "quiz-party",
     "category": "game",
     "names": [

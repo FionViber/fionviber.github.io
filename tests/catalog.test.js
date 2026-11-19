@@ -105,7 +105,7 @@ test("every category card has exactly two independent links for each platform", 
       url: config.launchUrls?.[p.id] || p.url,
     }));
     for (const [path, count] of [
-      ["tools.html", 6],
+      ["tools.html", 8],
       ["games.html", 12],
     ]) {
       const html = renderPage(
