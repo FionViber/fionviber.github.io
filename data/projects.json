@@ -161,14 +161,14 @@
       "離線翻譯"
     ],
     "descriptions": [
-      "Translate locally in your browser with Firefox BASE models for eight languages.",
-      "使用 Firefox BASE 模型，在浏览器内翻译八种语言。",
-      "使用 Firefox BASE 模型，在瀏覽器內翻譯八種語言。"
+      "Translate locally in your browser with Firefox models covering 61 languages and variants across 118 direct translation directions.",
+      "使用 Firefox 模型在浏览器内翻译，覆盖 61 种语言及变体，支持 118 个直译方向。",
+      "使用 Firefox 模型在瀏覽器內翻譯，涵蓋 61 種語言及變體，支援 118 個直譯方向。"
     ],
     "tips": [
-      "Choose a direction and select Translate to download its models on first use. Directions labelled ‘via English’ use two local translation steps.",
-      "选择方向并点击翻译，首次使用时会下载所需模型。标有“经英语中转”的方向会在本地分两步翻译。",
-      "選擇方向並點選翻譯，首次使用時會下載所需模型。標有「經英語轉譯」的方向會在本機分兩步翻譯。"
+      "Choose a source and target language, then select Translate. Required models download only when used. Directions labelled ‘via English’ use two local translation steps. Models can be reused from the browser cache.",
+      "选择源语言和目标语言后点击翻译。所需模型只会在使用时下载。标有“经英语中转”的方向会在本地分两步翻译，模型可以从浏览器缓存复用。",
+      "選擇來源語言與目標語言後點選翻譯。所需模型只會在使用時下載。標有「經英語轉譯」的方向會在本機分兩步翻譯，模型可以從瀏覽器快取重用。"
     ],
     "category": "tool",
     "url": "https://fionviber.github.io/OfflineTranslator/",
