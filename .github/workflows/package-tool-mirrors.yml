@@ -1,0 +1,86 @@
+name: Package static tool mirrors
+on:
+  workflow_dispatch:
+    inputs:
+      sites:
+        description: Verified Cloudflare file manifests and replacement GitHub revisions (JSON array)
+        required: true
+        type: string
+permissions: {}
+jobs:
+  package:
+    name: Package ${{ matrix.site.name }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        site: ${{ fromJSON(inputs.sites) }}
+    steps:
+      - name: Assemble the static files
+        env:
+          SITE: ${{ toJSON(matrix.site) }}
+        shell: python
+        run: |
+          import concurrent.futures, json, os, re, shutil, time
+          from pathlib import Path, PurePosixPath
+          from urllib.error import HTTPError
+          from urllib.parse import quote, urlparse
+          from urllib.request import Request, urlopen
+
+          site = json.loads(os.environ['SITE'])
+          allowed = {'zacktools','xiaohammer-qrcode','xiaohammer-converter','text-counter-738','fionviber-translation-models'}
+          parsed = urlparse(site['base'])
+          labels = (parsed.hostname or '').split('.')
+          assert parsed.scheme == 'https' and len(labels) == 4 and labels[-2:] == ['pages','dev']
+          assert re.fullmatch('[a-f0-9]{8}', labels[0]) and labels[1] in allowed
+          root = Path('site')
+          root.mkdir()
+          files = site['files']
+          assert len(files) == len(set(files)) == site['expected'] and 'index.html' in files
+          replacements = site.get('replace', {})
+          assert set(replacements) <= set(files)
+          def copy(name):
+              path = PurePosixPath(name)
+              assert not path.is_absolute() and '..' not in path.parts
+              dest = root.joinpath(*path.parts)
+              dest.parent.mkdir(parents=True, exist_ok=True)
+              if name == '.nojekyll':
+                  dest.touch()
+                  return
+              url = site['base'] + '/' + quote(name)
+              if name in replacements:
+                  repo, rev, source = replacements[name]
+                  assert repo in {'QRCode','ChineseConverter','CustomizeRank','TextCounter','OfflineTranslator'}
+                  assert re.fullmatch('[a-f0-9]{40}', rev)
+                  url = 'https://raw.githubusercontent.com/FionViber/' + repo + '/' + rev + '/' + quote(source)
+              for attempt in range(3):
+                  try:
+                      with urlopen(Request(url, headers={'User-Agent':'Static-site-release/1'}), timeout=90) as response:
+                          content_type = response.headers.get_content_type()
+                          if content_type == 'text/html' and path.suffix not in {'.html','.htm'}:
+                              raise ValueError('Unexpected HTML for ' + name)
+                          with dest.open('wb') as output:
+                              shutil.copyfileobj(response, output)
+                      break
+                  except HTTPError as exc:
+                      if exc.code == 404 and name == '404.html':
+                          dest.write_bytes(exc.read())
+                          break
+                      if attempt == 2 or exc.code < 500: raise
+                      time.sleep(2 ** attempt)
+              if name in replacements and name.endswith('index.html'):
+                  data = dest.read_text('utf-8').replace('https://fionviber.github.io/', 'https://fionviber.pages.dev/')
+                  dest.write_text(data, encoding='utf-8')
+          with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+              list(pool.map(copy, files))
+          for name, data in site.get('rules', {}).items():
+              assert name in {'_headers','_redirects'}
+              (root / name).write_text(data, encoding='utf-8')
+          print(f"Prepared {len(files)} production assets for {site['name']}")
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.site.name }}
+          path: site/
+          include-hidden-files: true
+          retention-days: 1
