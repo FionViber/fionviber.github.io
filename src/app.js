@@ -1,6 +1,7 @@
 import { projects } from "@catalog";
 import { languages, pageURL, resolveView } from "./model.js";
 import { renderPage } from "./render.js";
+import { initLocaleMenu } from "./locale-menu.js";
 import { revealPage } from "./motion.js";
 
 const baseURL = new URL("../", import.meta.url);
@@ -55,6 +56,8 @@ function render(view, { rebuildShell = false, draft } = {}) {
   document.body.dataset.page = view.page;
   document.body.dataset.project = view.id || "";
   app.querySelector("#query").value = draft ?? view.url.searchParams.get("q") ?? "";
+  app.querySelector("#language-menu").hidden = true;
+  app.querySelector("#language").setAttribute("aria-expanded", "false");
   searchOpen = false;
   syncSearch();
 }
@@ -152,17 +155,12 @@ app.addEventListener("submit", (event) => {
   );
 });
 
-app.addEventListener("change", (event) => {
-  if (event.target.id !== "language") return;
-  preferences.write(event.target.value);
+initLocaleMenu(app, (value) => {
+  if (value === current.lang) return;
+  preferences.write(value);
   const url = new URL(location.href);
-  url.searchParams.set("lang", event.target.value);
-  navigate(url, {
-    replace: true,
-    restore: undefined,
-    focus: "language",
-    preserveDraft: true,
-  });
+  url.searchParams.set("lang", value);
+  navigate(url, { replace: true, focus: "language", preserveDraft: true });
 });
 
 app.addEventListener("keydown", (event) => {

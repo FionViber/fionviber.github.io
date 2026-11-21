@@ -176,6 +176,28 @@
     "protected": false
   },
   {
+    "id": "mypdf",
+    "category": "tool",
+    "names": [
+      "MyPDF",
+      "MyPDF",
+      "MyPDF"
+    ],
+    "descriptions": [
+      "Merge, split and convert PDFs in the browser.",
+      "在浏览器中合并、拆分和转换 PDF。",
+      "在瀏覽器中合併、分割和轉換 PDF。"
+    ],
+    "url": "https://fionviber.github.io/MyPDF/",
+    "repo": "https://github.com/FionViber/MyPDF",
+    "protected": false,
+    "tips": [
+      "Choose a tool, add your files and download the result.",
+      "选择工具，添加文件，处理后下载结果。",
+      "選擇工具，加入檔案，處理後下載結果。"
+    ]
+  },
+  {
     "id": "quiz-party",
     "category": "game",
     "names": [

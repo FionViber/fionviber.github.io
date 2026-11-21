@@ -105,8 +105,8 @@ test("every category card has exactly two independent links for each platform", 
       url: config.launchUrls?.[p.id] || p.url,
     }));
     for (const [path, count] of [
-      ["tools.html", 8],
-      ["games.html", 12],
+      ["tools.html", projects.filter(p => p.category === "tool").length],
+      ["games.html", projects.filter(p => p.category === "game").length],
     ]) {
       const html = renderPage(
         resolveView(new URL(path, config.baseUrl), config.baseUrl, data),
@@ -146,4 +146,14 @@ test("old category detail bookmarks reach the renamed projects", () => {
   assert.equal(resolveView(redirect, base, projects).page, "detail");
   const legacyId = new URL("project.html?id=xiaohammer-qrcode&lang=zh", base);
   assert.equal(resolveView(legacyId, base, projects).redirect.pathname, "/catalog/projects/qr-code.html");
+});
+
+test("navigation and the language menu share accessible labels and local icons", () => {
+  const page = renderPage(resolveView(new URL("index.html", base), base, projects), projects, base).html;
+  for (const name of ["world", "search", "home", "tools", "device-gamepad-2", "info-circle"]) {
+    assert(page.includes(`class="icon icon-${name}"`));
+  }
+  assert.match(page, /role="menu"/);
+  assert.equal((page.match(/role="menuitemradio"/g) || []).length, 3);
+  assert.equal((page.match(/aria-checked="true"/g) || []).length, 1);
 });

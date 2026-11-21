@@ -111,6 +111,7 @@ for (const [platform, config] of Object.entries(platforms)) {
   await writeFile(directory + "/assets/" + scriptName, code);
   await writeFile(directory + "/assets/" + styleName, css);
   await copyFile(root + "favicon.svg", directory + "/assets/favicon.svg");
+  await copyFile(root + "assets/tabler-license.txt", directory + "/assets/tabler-license.txt");
   for (const path of routes) {
     const url = new URL(path, config.baseUrl),
       view = resolveView(url, config.baseUrl, projects, "en");
