@@ -1,7 +1,7 @@
 import { projects } from "@catalog";
 import { languages, pageURL, resolveView } from "./model.js";
 import { renderPage } from "./render.js";
-import { transition } from "./motion.js";
+import { revealPage } from "./motion.js";
 
 const baseURL = new URL("../", import.meta.url);
 const app = document.querySelector("#app");
@@ -34,25 +34,28 @@ history.replaceState(
 function syncSearch() {
   const form = app.querySelector("#search-form");
   form.classList.toggle("is-open", mobile.matches && searchOpen);
-  const trigger = form.querySelector(".search-submit");
-  if (mobile.matches) {
-    trigger.setAttribute("aria-controls", "query");
-    trigger.setAttribute("aria-expanded", String(searchOpen));
-  } else {
-    trigger.removeAttribute("aria-controls");
-    trigger.removeAttribute("aria-expanded");
-  }
+  const trigger = app.querySelector(".search-toggle");
+  trigger.setAttribute("aria-expanded", String(searchOpen));
+  trigger.setAttribute("aria-label", searchOpen ? trigger.dataset.closeLabel : trigger.dataset.openLabel);
 }
 
-function render(view, draft) {
+function render(view, { rebuildShell = false, draft } = {}) {
   const output = renderPage(view, projects, baseURL);
-  app.innerHTML = output.html;
+  if (rebuildShell) {
+    app.innerHTML = output.html;
+  } else {
+    app.querySelector("#main").innerHTML = output.content;
+    for (const link of app.querySelectorAll(".main-nav [data-section]")) {
+      if (link.dataset.section === view.page) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    }
+  }
   document.documentElement.lang = languages[view.lang];
   document.title = output.title;
   document.body.dataset.page = view.page;
   document.body.dataset.project = view.id || "";
+  app.querySelector("#query").value = draft ?? view.url.searchParams.get("q") ?? "";
   searchOpen = false;
-  if (draft !== undefined) app.querySelector("#query").value = draft;
   syncSearch();
 }
 
@@ -69,7 +72,7 @@ function rememberScroll() {
   );
 }
 
-async function navigate(
+function navigate(
   destination,
   {
     replace = false,
@@ -85,42 +88,33 @@ async function navigate(
   if (!restore && view.url.href === location.href) return;
   const scroll = restore || [0, 0];
   const draft = preserveDraft ? app.querySelector("#query").value : undefined;
-  const applied = await transition(() => {
-    if (!restore) {
-      rememberScroll();
-      currentEntry = replace ? currentEntry : crypto.randomUUID();
-      history[replace ? "replaceState" : "pushState"](
-        { catalogEntry: currentEntry, catalogScroll: scroll },
-        "",
-        view.url,
-      );
-    } else {
-      currentEntry = entry || crypto.randomUUID();
-    }
-    current = view;
-    render(current, draft);
-    scrollTo({ left: scroll[0], top: scroll[1], behavior: "instant" });
-  });
-  if (applied)
-    app
-      .querySelector(focus === "language" ? "#language" : "#main")
-      ?.focus({ preventScroll: true });
+  const rebuildShell = view.lang !== current.lang;
+  if (!restore) {
+    rememberScroll();
+    currentEntry = replace ? currentEntry : crypto.randomUUID();
+    history[replace ? "replaceState" : "pushState"](
+      { catalogEntry: currentEntry, catalogScroll: scroll }, "", view.url
+    );
+  } else {
+    currentEntry = entry || crypto.randomUUID();
+  }
+  current = view;
+  render(view, { rebuildShell, draft });
+  scrollTo({ left: scroll[0], top: scroll[1], behavior: "instant" });
+  const main = app.querySelector("#main");
+  (focus === "language" ? app.querySelector("#language") : main).focus({ preventScroll: true });
+  revealPage(main);
 }
 
-async function toggleSearch(open) {
-  const applied = await transition(() => {
-    searchOpen = open;
-    syncSearch();
-  });
-  if (applied)
-    app
-      .querySelector(open ? "#query" : ".search-submit")
-      .focus({ preventScroll: true });
+function toggleSearch(open) {
+  searchOpen = open;
+  syncSearch();
+  app.querySelector(open ? "#query" : ".search-toggle").focus({ preventScroll: true });
 }
 
 app.addEventListener("click", (event) => {
-  if (event.target.closest(".search-close")) {
-    toggleSearch(false);
+  if (event.target.closest(".search-toggle")) {
+    toggleSearch(!searchOpen);
     return;
   }
   const anchor = event.target.closest("a[href]");
@@ -151,10 +145,6 @@ app.addEventListener("click", (event) => {
 app.addEventListener("submit", (event) => {
   if (event.target.id !== "search-form") return;
   event.preventDefault();
-  if (mobile.matches && !searchOpen) {
-    toggleSearch(true);
-    return;
-  }
   navigate(
     pageURL("search.html", baseURL, current.lang, {
       q: app.querySelector("#query").value.trim(),
@@ -179,7 +169,7 @@ app.addEventListener("keydown", (event) => {
   if (
     event.key === "Escape" &&
     searchOpen &&
-    event.target.closest("#search-form")
+    event.target.closest("#search-form, .search-toggle")
   ) {
     event.preventDefault();
     toggleSearch(false);
@@ -187,8 +177,7 @@ app.addEventListener("keydown", (event) => {
 });
 
 mobile.addEventListener("change", () => {
-  if (mobile.matches && document.activeElement?.id === "query")
-    searchOpen = true;
+  searchOpen = mobile.matches && document.activeElement?.id === "query";
   syncSearch();
 });
 history.scrollRestoration = "manual";
@@ -204,5 +193,5 @@ if (current.redirect) {
   history.replaceState(history.state, "", current.redirect);
   current = resolveView(current.redirect, baseURL, projects, current.lang);
 }
-render(current);
+render(current, { rebuildShell: true });
 document.documentElement.dataset.enhanced = "true";

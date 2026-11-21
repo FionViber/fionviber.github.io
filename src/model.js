@@ -9,6 +9,11 @@ const pages = {
   404: "missing",
 };
 
+export const renamedProjects = {
+  "xiaohammer-converter": "chinese-converter",
+  "xiaohammer-qrcode": "qr-code",
+};
+
 export const languageIndex = (language) => ({ en: 0, zh: 1, tw: 2 })[language];
 export const escapeHTML = (value) =>
   String(value ?? "").replace(
@@ -57,6 +62,11 @@ export function resolveView(input, base, projects, preferredLanguage = "en") {
   if (Object.hasOwn(pages, path))
     return { ...view, page: pages[path], internal: true };
   const project = path.match(/^projects\/([a-z0-9-]+)$/);
+  if (project && Object.hasOwn(renamedProjects, project[1])) {
+    const redirect = new URL(url);
+    redirect.pathname = new URL("projects/" + renamedProjects[project[1]] + ".html", root).pathname;
+    return { ...view, internal: true, redirect };
+  }
   if (project)
     return {
       ...view,
@@ -65,7 +75,8 @@ export function resolveView(input, base, projects, preferredLanguage = "en") {
       internal: true,
     };
   if (path === "project") {
-    const id = url.searchParams.get("id");
+    const requested = url.searchParams.get("id");
+    const id = Object.hasOwn(renamedProjects, requested) ? renamedProjects[requested] : requested;
     return {
       ...view,
       internal: true,

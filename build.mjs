@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { createRequire } from "node:module";
 import assert from "node:assert/strict";
-import { resolveView, escapeHTML } from "./src/model.js";
+import { resolveView, escapeHTML, renamedProjects } from "./src/model.js";
 import { renderPage } from "./src/render.js";
 
 const root = fileURLToPath(new URL(".", import.meta.url));
@@ -124,6 +124,18 @@ for (const [platform, config] of Object.entries(platforms)) {
     const html = `<!doctype html>\n<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${escapeHTML(view.id ? projects.find((p) => p.id === view.id)?.descriptions[0] || "Project directory" : "FionViber’s collection of browser tools and games.")}"><meta name="theme-color" content="#e6f0f8"><title>${escapeHTML(page.title)}</title><link rel="icon" href="${prefix}assets/favicon.svg"><link rel="stylesheet" href="${prefix}assets/${styleName}"><script type="module" src="${prefix}assets/${scriptName}"></script></head><body data-page="${view.page}" data-project="${view.id || ""}"><div id="app">${page.html}</div><noscript><p class="wrap">Project links work without JavaScript. Enable it for search and language selection.</p></noscript></body></html>\n`;
     await writeFile(directory + "/" + path, html);
   }
+  // Existing bookmarks may include a language preference or an anchor.
+  const aliases = [];
+  for (const [oldId, id] of Object.entries(renamedProjects)) {
+    const alias = "projects/" + oldId + ".html";
+    const target = "./" + id + ".html";
+    const destination = projects.find(project => project.id === id);
+    assert(destination, "Invalid project redirect");
+    const title = escapeHTML(destination.names[0]);
+    const html = `<!doctype html><html lang="en-GB"><meta charset="utf-8"><title>${title}</title><link rel="canonical" href="${target}"><script>location.replace(${JSON.stringify(target)}+location.search+location.hash)</script><meta http-equiv="refresh" content="0;url=${target}"><a href="${target}">${title}</a></html>\n`;
+    await writeFile(directory + "/" + alias, html);
+    aliases.push(alias);
+  }
   await writeFile(directory + "/.nojekyll", "");
   await writeFile(
     directory + "/build-manifest.json",
@@ -133,7 +145,7 @@ for (const [platform, config] of Object.entries(platforms)) {
         baseUrl: config.baseUrl,
         scripts: [scriptName],
         styles: [styleName],
-        pages: routes,
+        pages: [...routes, ...aliases],
         projects: projects.map((p) => ({ id: p.id, url: p.url })),
       },
       null,

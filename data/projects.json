@@ -1,19 +1,19 @@
 [
   {
-    "id": "xiaohammer-converter",
+    "id": "chinese-converter",
     "category": "tool",
     "names": [
-      "XiaoHammer Chinese Converter",
-      "小锤中文转换器",
-      "小錘中文轉換器"
+      "Chinese Converter",
+      "中文转换器",
+      "中文轉換器"
     ],
     "descriptions": [
       "A compact browser utility for converting Chinese text.",
       "用于转换中文文本的轻量浏览器工具。",
       "用於轉換中文文字的輕量瀏覽器工具。"
     ],
-    "url": "https://fionviber.github.io/XiaoHammerChineseConverter/",
-    "repo": "https://github.com/FionViber/XiaoHammerChineseConverter",
+    "url": "https://fionviber.github.io/ChineseConverter/",
+    "repo": "https://github.com/FionViber/ChineseConverter",
     "protected": false,
     "tips": [
       "Paste your text, choose the conversion you need, then copy the result.",
@@ -22,20 +22,20 @@
     ]
   },
   {
-    "id": "xiaohammer-qrcode",
+    "id": "qr-code",
     "category": "tool",
     "names": [
-      "XiaoHammer QR Code",
-      "小锤二维码",
-      "小錘 QR Code"
+      "QR Code",
+      "二维码",
+      "QR Code"
     ],
     "descriptions": [
       "Create QR codes directly in the browser.",
       "直接在浏览器中生成二维码。",
       "直接在瀏覽器中產生 QR Code。"
     ],
-    "url": "https://fionviber.github.io/XiaoHammerQRCode/",
-    "repo": "https://github.com/FionViber/XiaoHammerQRCode",
+    "url": "https://fionviber.github.io/QRCode/",
+    "repo": "https://github.com/FionViber/QRCode",
     "protected": false,
     "tips": [
       "Enter the content for your QR code and use the tool’s export controls to save it.",

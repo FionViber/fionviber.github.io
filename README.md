@@ -17,7 +17,7 @@ Both editions use the same source. Their project launch URLs are selected during
 | `src/model.js` | Routes, language selection, search and URL construction |
 | `src/render.js` | Shared page and component templates |
 | `src/app.js` | Navigation, history, focus, preferences and search controls |
-| `src/motion.js` | View Transition orchestration and reduced-motion fallback |
+| `src/motion.js` | Content entrance and reduced-motion preferences |
 | `styles.css` | Design tokens, components, motion and responsive layout |
 | `build.mjs` | Static HTML and hashed production assets for both hosts |
 
@@ -43,4 +43,4 @@ When adding a project, provide all three translations in `data/projects.json` an
 
 Internal navigation uses one route and rendering pipeline, including search, language changes and browser Back/Forward. Every route also has a physical HTML page for direct visits and refreshes. External project links keep their normal new-tab behaviour.
 
-The motion layer uses the browser's View Transition API when available and a short Web Animations entrance otherwise. It respects `prefers-reduced-motion`, permits interaction during transitions, and cancels obsolete updates during rapid navigation. There are no animation libraries or continuous animation loops.
+Navigation updates the main content immediately and fades it in for 150 ms. The header and footer persist across routes in the same language. Rapid navigation cancels the previous entrance, and reduced-motion preferences disable it. The mobile search is a disclosure with its own toggle and a shared focus boundary around the field and submit button.

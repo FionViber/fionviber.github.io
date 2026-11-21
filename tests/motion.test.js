@@ -1,62 +1,52 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-test("motion applies state immediately when reduced motion is requested", async () => {
-  globalThis.matchMedia = () => ({ matches: true });
-  let animated = 0,
-    updated = 0;
-  globalThis.document = {
-    querySelector: () => ({
-      animate() {
-        animated++;
-      },
-    }),
+async function setup(name, reduce = false) {
+  const animations = [];
+  let onChange;
+  const preference = {
+    matches: reduce,
+    addEventListener(event, callback) { onChange = callback; },
   };
-  const { transition } = await import("../src/motion.js?reduced");
-  assert.equal(await transition(() => updated++), true);
-  assert.equal(updated, 1);
-  assert.equal(animated, 0);
-});
-
-test("unsupported native transitions still navigate and animate the content", async () => {
-  globalThis.matchMedia = () => ({ matches: false });
-  let animated = 0,
-    updated = 0;
-  globalThis.document = {
-    querySelector: () => ({
-      animate(frames, options) {
-        animated++;
-        assert.equal(options.duration, 220);
-      },
-    }),
-  };
-  const { transition } = await import("../src/motion.js?fallback");
-  assert.equal(await transition(() => updated++), true);
-  assert.equal(updated, 1);
-  assert.equal(animated, 1);
-});
-
-test("rapid successive transitions commit only the latest requested view", async () => {
-  globalThis.matchMedia = () => ({ matches: false });
-  const committed = [];
-  let skipped = 0;
-  globalThis.document = {
-    startViewTransition(update) {
-      const done = Promise.resolve().then(update);
-      return {
-        updateCallbackDone: done,
-        ready: done,
-        finished: done,
-        skipTransition() {
-          skipped++;
-        },
-      };
+  globalThis.matchMedia = () => preference;
+  const { revealPage } = await import(`../src/motion.js?${name}`);
+  const main = {
+    animate(frames, options) {
+      const animation = { frames, options, cancelled: false, cancel() { this.cancelled = true; } };
+      animations.push(animation);
+      return animation;
     },
   };
-  const { transition } = await import("../src/motion.js?rapid");
-  const first = transition(() => committed.push("first")),
-    second = transition(() => committed.push("second"));
-  assert.deepEqual(await Promise.all([first, second]), [false, true]);
-  assert.deepEqual(committed, ["second"]);
-  assert.equal(skipped, 1);
+  return { main, revealPage, animations, reduce() { preference.matches = true; onChange(); } };
+}
+
+test("only incoming content fades and the layout never interpolates", async () => {
+  const { main, revealPage, animations } = await setup("main");
+  revealPage(main);
+  assert.equal(animations.length, 1);
+  assert(animations[0].frames.every(frame => Object.keys(frame).every(key => key === "opacity")));
+  assert(animations[0].frames[0].opacity > 0);
+  assert.equal(animations[0].frames.at(-1).opacity, 1);
+});
+test("a second navigation immediately replaces the earlier entrance", async () => {
+  const { main, revealPage, animations } = await setup("rapid");
+  revealPage(main);
+  revealPage(main);
+  assert(animations[0].cancelled);
+  assert(!animations[1].cancelled);
+});
+test("reduced motion applies on initial render and during playback", async () => {
+  const initial = await setup("reduced", true);
+  initial.revealPage(initial.main);
+  assert.equal(initial.animations.length, 0);
+  const live = await setup("change");
+  live.revealPage(live.main);
+  live.reduce();
+  assert(live.animations[0].cancelled);
+  live.revealPage(live.main);
+  assert.equal(live.animations.length, 1);
+});
+test("navigation still works without the Web Animations API", async () => {
+  const { revealPage } = await setup("unsupported");
+  assert.doesNotThrow(() => revealPage({}));
 });

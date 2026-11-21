@@ -5,8 +5,8 @@
   "cloudflare": {
     "baseUrl": "https://fionviber.pages.dev/",
     "launchUrls": {
-      "xiaohammer-converter": "https://xiaohammer-converter.pages.dev/",
-      "xiaohammer-qrcode": "https://xiaohammer-qrcode.pages.dev/",
+      "chinese-converter": "https://zacktools.pages.dev/ChineseConverter/",
+      "qr-code": "https://zacktools.pages.dev/QRCode/",
       "webpp": "https://webpp-w9m.pages.dev/",
       "randomkit": "https://randomkit-jgm.pages.dev/",
       "crowdlab": "https://crowdlab.pages.dev/",

@@ -16,7 +16,6 @@
   --ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
   --duration-fast: 120ms;
   --duration-standard: 220ms;
-  --duration-slow: 320ms;
   font-family: var(--font);
   color: var(--ink);
   background: var(--page);
@@ -32,6 +31,7 @@
 }
 
 html {
+  scrollbar-gutter: stable;
   scroll-behavior: smooth;
 }
 
@@ -163,8 +163,6 @@ h3 {
 }
 
 .mast-inner {
-  transition: padding-block var(--duration-standard) var(--ease-standard);
-  position: relative;
   display: flex;
   min-height: 124px;
   align-items: center;
@@ -232,42 +230,57 @@ html:not([data-enhanced]) :is(.search-form, .language-control) {
   align-items: stretch;
   border: 1px solid #768897;
   background: var(--surface);
-  transition: box-shadow var(--duration-standard) var(--ease-standard);
+  min-width: 0;
 }
 
 .search-form:focus-within {
-  box-shadow: 0 0 0 3px rgb(7 85 140 / 16%);
+  outline: 2px solid var(--link);
+  outline-offset: 0;
 }
 
 .search-form input[type="search"] {
-  width: 200px;
+  appearance: none;
+  flex: 1 1 12.5rem;
+  width: 12.5rem;
   min-width: 0;
+  min-height: var(--target);
   padding: 8px 12px;
   border: 0;
-  color: var(--ink);
   background: var(--surface);
-  font-size: .875rem;
+  color: var(--ink);
+  font-size: .9375rem;
 }
 
+/* The field and submit button share one visible boundary. */
+.search-form input:focus { outline: none; }
+.search-submit:focus-visible { outline-offset: -4px; }
+
 .search-submit,
-.search-close {
+.search-toggle {
   display: grid;
-  width: 44px;
+  flex: none;
+  width: var(--target);
   min-height: var(--target);
   place-items: center;
   border: 0;
-  color: var(--blue);
   background: var(--surface);
+  color: var(--blue);
 }
 
-.search-submit svg {
+.search-form svg,
+.search-toggle svg {
   fill: none;
   stroke: currentColor;
   stroke-width: 1.7;
 }
 
-.search-close {
-  display: none;
+.search-toggle,
+.search-toggle span,
+.search-toggle[aria-expanded="true"] svg { display: none; }
+.search-toggle[aria-expanded="true"] span {
+  display: inline;
+  font-size: 1.4rem;
+  line-height: 1;
 }
 
 .main-nav {
@@ -590,83 +603,8 @@ footer {
   background: var(--surface);
 }
 
-@view-transition {
-  navigation: auto;
-}
-
-::view-transition {
-  pointer-events: none;
-}
-
-#main {
-  view-transition-name: page-content;
-}
-.masthead {
-  view-transition-name: site-header;
-}
-footer {
-  view-transition-name: site-footer;
-}
-::view-transition-group(*) {
-  animation-duration: var(--duration-standard);
-  animation-timing-function: var(--ease-standard);
-}
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-::view-transition-old(page-content) {
-  animation: page-out var(--duration-standard) var(--ease-standard) both;
-}
-::view-transition-new(page-content) {
-  animation: page-in var(--duration-standard) var(--ease-standard) both;
-}
-::view-transition-old(site-header),
-::view-transition-old(site-footer) {
-  animation: fade-out var(--duration-fast) ease both;
-}
-::view-transition-new(site-header),
-::view-transition-new(site-footer) {
-  animation: fade-in var(--duration-standard) ease both;
-}
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes page-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes page-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-}
+/* Focus moves here after a route change. Individual controls keep their focus ring. */
+#main:focus { outline: none; }
 
 @media (max-width: 950px) {
   .project-grid {
@@ -688,6 +626,8 @@ footer {
 
 @media (max-width: 620px) {
   .mast-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     min-height: 120px;
     gap: 12px;
   }
@@ -697,38 +637,16 @@ footer {
   .tagline {
     display: none;
   }
-  .search-form {
-    border: 0;
-  }
-  .search-form input[type="search"] {
-    position: absolute;
-    bottom: 12px;
-    left: 0;
-    width: 100%;
-    height: 44px;
-    border: 1px solid #768897;
-    transition:
-      opacity var(--duration-standard) var(--ease-standard),
-      transform var(--duration-standard) var(--ease-standard);
-  }
-  html[data-enhanced] .search-form:not(.is-open) input[type="search"] {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-4px);
-  }
-  .search-form.is-open input[type="search"] {
-    visibility: visible;
-    opacity: 1;
-    transform: none;
-  }
-  .mast-inner:has(.search-form.is-open) {
-    padding-top: 20px;
-    padding-bottom: 64px;
-  }
-  .search-form.is-open .search-close {
+  html[data-enhanced] .search-toggle {
     display: grid;
+    border: 1px solid #768897;
   }
+  .search-form { display: none; }
+  .search-form.is-open {
+    display: flex;
+    grid-column: 1 / -1;
+  }
+  .search-form input[type="search"] { font-size: 1rem; }
   .nav-inner {
     justify-content: space-between;
     gap: 0;
@@ -787,11 +705,6 @@ footer {
     animation: none !important;
     transition: none !important;
     scroll-behavior: auto !important;
-  }
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation: none !important;
   }
   .project-card:hover,
   .card-button:hover,

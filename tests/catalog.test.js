@@ -138,3 +138,12 @@ test("search markup escapes injected text", () => {
   assert(!html.includes("<img src=x"));
   assert(html.includes("&lt;img"));
 });
+
+test("old category detail bookmarks reach the renamed projects", () => {
+  const old = new URL("projects/xiaohammer-converter.html?lang=tw#main", base);
+  const redirect = resolveView(old, base, projects).redirect;
+  assert.equal(redirect.href, new URL("projects/chinese-converter.html?lang=tw#main", base).href);
+  assert.equal(resolveView(redirect, base, projects).page, "detail");
+  const legacyId = new URL("project.html?id=xiaohammer-qrcode&lang=zh", base);
+  assert.equal(resolveView(legacyId, base, projects).redirect.pathname, "/catalog/projects/qr-code.html");
+});
