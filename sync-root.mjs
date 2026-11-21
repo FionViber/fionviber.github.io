@@ -1,4 +1,5 @@
 import { copyFile, mkdir, readFile, readdir, rm } from "node:fs/promises";
+import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL(".", import.meta.url));
 const source = root + "dist/github";
@@ -14,8 +15,10 @@ for (const file of await readdir(root + "assets")) {
   )
     await rm(root + "assets/" + file);
 }
-for (const file of [...manifest.pages, ".nojekyll"])
+for (const file of [...manifest.pages, ".nojekyll"]) {
+  await mkdir(dirname(root + file), { recursive: true });
   await copyFile(source + "/" + file, root + file);
+}
 for (const file of [...manifest.scripts, ...manifest.styles, "favicon.svg"])
   await copyFile(source + "/assets/" + file, root + "assets/" + file);
 await rm(root + "style.css", { force: true });
