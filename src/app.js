@@ -35,8 +35,13 @@ function syncSearch() {
   const form = app.querySelector("#search-form");
   form.classList.toggle("is-open", mobile.matches && searchOpen);
   const trigger = form.querySelector(".search-submit");
-  if (mobile.matches) trigger.setAttribute("aria-expanded", String(searchOpen));
-  else trigger.removeAttribute("aria-expanded");
+  if (mobile.matches) {
+    trigger.setAttribute("aria-controls", "query");
+    trigger.setAttribute("aria-expanded", String(searchOpen));
+  } else {
+    trigger.removeAttribute("aria-controls");
+    trigger.removeAttribute("aria-expanded");
+  }
 }
 
 function render(view, draft) {

@@ -1,5 +1,7 @@
 export const messages = {
   en: {
+    navigation: "Main navigation",
+    breadcrumb: "Breadcrumb",
     home: "Home",
     tools: "Tools",
     games: "Games",
@@ -35,7 +37,7 @@ export const messages = {
     prompt: "Search the collection",
     notFound: "Page not found",
     notFoundText: "This project or page is not in the directory.",
-    back: "Back to all projects",
+    back: "Back to home",
     related: "More to explore",
     read: "Read Details",
     aboutTitle: "About this collection",
@@ -56,6 +58,8 @@ export const messages = {
       "Browser games, from puzzles and card-based stories to action and exploration.",
   },
   zh: {
+    navigation: "主导航",
+    breadcrumb: "当前位置",
     home: "首页",
     tools: "工具",
     games: "游戏",
@@ -89,7 +93,7 @@ export const messages = {
     prompt: "搜索项目集",
     notFound: "页面不存在",
     notFoundText: "目录中没有这个项目或页面。",
-    back: "返回全部项目",
+    back: "返回首页",
     related: "继续探索",
     read: "查看详情",
     aboutTitle: "关于这个项目集",
@@ -108,6 +112,8 @@ export const messages = {
     gamesText: "从解谜与卡牌叙事，到动作与探索的网页游戏。",
   },
   tw: {
+    navigation: "主導覽",
+    breadcrumb: "目前位置",
     home: "首頁",
     tools: "工具",
     games: "遊戲",
@@ -141,7 +147,7 @@ export const messages = {
     prompt: "搜尋專案集",
     notFound: "頁面不存在",
     notFoundText: "目錄中沒有這個專案或頁面。",
-    back: "返回全部專案",
+    back: "返回首頁",
     related: "繼續探索",
     read: "查看詳情",
     aboutTitle: "關於這個專案集",
