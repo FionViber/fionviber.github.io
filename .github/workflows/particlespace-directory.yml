@@ -1,0 +1,55 @@
+name: Build Particle Space directory update
+on:
+  push:
+    branches: [particlespace-directory]
+    paths: ['.github/workflows/particlespace-directory.yml']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Update the existing project and bookmark aliases
+        shell: python
+        run: |
+          import json
+          from pathlib import Path
+          projects_file = Path('data/projects.json')
+          catalog = json.loads(projects_file.read_text())
+          project, = [p for p in catalog if p['id'] == 'webpp']
+          project.update(id='particlespace', names=['Particle Space'] * 3, url='https://fionviber.github.io/particlespace/', repo='https://github.com/FionViber/particlespace')
+          projects_file.write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + '\n')
+          platform_file = Path('data/platforms.json')
+          spec = platform_file.read_text()
+          old = '"webpp": "https://webpp-w9m.pages.dev/"'
+          assert spec.count(old) == 1
+          platform_file.write_text(spec.replace(old, '"particlespace": "https://particlespace.pages.dev/"'))
+          model = Path('src/model.js')
+          anchor = '  "xiaohammer-qrcode": "qr-code",'
+          assert model.read_text().count(anchor) == 1
+          model.write_text(model.read_text().replace(anchor, anchor + '\n  "webpp": "particlespace",'))
+          script = Path('build.mjs')
+          old = 'oldPages.push([`XiaoHammer${name}/index.html`, destination.url]);'
+          new = 'const previousRepository = oldId === "webpp" ? "WebPP" : `XiaoHammer${name}`;\n      oldPages.push([`${previousRepository}/index.html`, destination.url]);'
+          assert script.read_text().count(old) == 1
+          script.write_text(script.read_text().replace(old, new))
+      - name: Test, build and stage both static editions
+        run: |
+          npm ci --no-audit --no-fund
+          npm test
+          npm run build
+          npm run sync:github
+          test -s projects/particlespace.html
+          test -s WebPP/index.html
+          mkdir -p codexinternal
+          (cd dist/cloudflare && zip -q -r ../../codexinternal/particlespace-directory.zip .)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git add -f codexinternal/particlespace-directory.zip
+          git commit -m "List Particle Space and retain previous project bookmarks"
+          git push origin HEAD:particlespace-directory
