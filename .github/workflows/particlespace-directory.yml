@@ -37,6 +37,10 @@ jobs:
           new = 'const previousRepository = oldId === "webpp" ? "WebPP" : `XiaoHammer${name}`;\n      oldPages.push([`${previousRepository}/index.html`, destination.url]);'
           assert script.read_text().count(old) == 1
           script.write_text(script.read_text().replace(old, new))
+          tests = Path('tests/catalog.test.js')
+          old = 'redirect.href.includes("projects/webpp.html")'
+          assert tests.read_text().count(old) == 1
+          tests.write_text(tests.read_text().replace(old, 'redirect.href.includes("projects/particlespace.html")'))
       - name: Test, build and stage both static editions
         run: |
           npm install --no-package-lock --no-audit --no-fund
