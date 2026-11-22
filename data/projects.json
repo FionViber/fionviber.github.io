@@ -44,20 +44,20 @@
     ]
   },
   {
-    "id": "webpp",
+    "id": "particlespace",
     "category": "tool",
     "names": [
-      "WebPP",
-      "WebPP 图像编辑器",
-      "WebPP 影像編輯器"
+      "Particle Space",
+      "Particle Space",
+      "Particle Space"
     ],
     "descriptions": [
       "A password-protected offline image editor running in your browser.",
       "在浏览器中运行的加密离线图像编辑器。",
       "在瀏覽器中執行的加密離線影像編輯器。"
     ],
-    "url": "https://fionviber.github.io/WebPP/",
-    "repo": "https://github.com/FionViber/WebPP",
+    "url": "https://fionviber.github.io/particlespace/",
+    "repo": "https://github.com/FionViber/particlespace",
     "protected": true,
     "tips": [
       "Unlock the editor, create a document or open a local image, then export the finished file. Its bundled application is large, so the first load can take a little time.",

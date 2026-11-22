@@ -59,7 +59,7 @@ test("unknown and malformed routes show missing pages", () => {
       new URL("project.html?id=webpp", base),
       base,
       projects,
-    ).redirect.href.includes("projects/webpp.html"),
+    ).redirect.href.includes("projects/particlespace.html"),
   );
 });
 test("language selection uses explicit supported URL first", () => {

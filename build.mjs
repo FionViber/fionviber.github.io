@@ -133,7 +133,8 @@ for (const [platform, config] of Object.entries(platforms)) {
     const oldPages = [[`projects/${oldId}.html`, `./${id}.html`]];
     if (platform === "github") {
       const name = new URL(destination.url).pathname.split("/").filter(Boolean).at(-1);
-      oldPages.push([`XiaoHammer${name}/index.html`, destination.url]);
+      const previousRepository = oldId === "webpp" ? "WebPP" : `XiaoHammer${name}`;
+      oldPages.push([`${previousRepository}/index.html`, destination.url]);
     }
     for (const [alias, target] of oldPages) {
       const title = escapeHTML(destination.names[0]);
