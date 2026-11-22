@@ -12,6 +12,7 @@ const pages = {
 export const renamedProjects = {
   "xiaohammer-converter": "chinese-converter",
   "xiaohammer-qrcode": "qr-code",
+  "webpp": "particlespace",
 };
 
 export const languageIndex = (language) => ({ en: 0, zh: 1, tw: 2 })[language];
