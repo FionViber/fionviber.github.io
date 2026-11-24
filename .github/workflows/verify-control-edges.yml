@@ -1,0 +1,46 @@
+name: Verify the directory control edges
+on:
+  push:
+    branches: [directory-focus-check-20261125]
+    paths: ['.github/workflows/verify-control-edges.yml']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Keep keyboard focus inside the existing control borders
+        shell: python
+        run: |
+          from pathlib import Path
+          css = Path('styles.css')
+          source = css.read_text()
+          for selector in ['#language:focus, #language[aria-expanded="true"]', '.search-form:focus-within']:
+              start = source.index(selector + ' {')
+              stop = source.index('}', start)
+              block = source[start:stop]
+              assert block.count('outline-offset: 0;') == 1
+              source = source[:start] + block.replace('outline-offset: 0;', 'outline-offset: -2px;') + source[stop:]
+          css.write_text(source)
+      - name: Build and verify both static editions
+        run: |
+          npm install --no-package-lock --no-audit --no-fund
+          npm test
+          npm run build
+          npm run sync:github
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          mkdir -p codexinternal
+          (cd dist/cloudflare && zip -q -r ../../codexinternal/directory.zip .)
+          git add -A
+          git add -f codexinternal/directory.zip
+          git commit -m 'Build aligned search and language controls for both hosts'
+          git rm codexinternal/directory.zip
+          git commit -m 'Keep the release archive out of the published directory'
+          git push origin HEAD:refs/heads/directory-focus-release-20261125
