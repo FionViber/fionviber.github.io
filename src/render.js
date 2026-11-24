@@ -32,16 +32,17 @@ export function renderPage(view, projects, baseURL) {
     `<button type="button" role="menuitemradio" tabindex="-1" lang="${localeTags[value]}" aria-checked="${value === lang}" data-locale="${value}"><span>${name}</span>${value === lang ? icon("check") : ""}</button>`
   ).join("");
   const language = `<div class="language-control"><button id="language" type="button" aria-label="${t("language")} · ${localeNames[lang]}" aria-haspopup="menu" aria-controls="language-menu" aria-expanded="false">${icon("world")}<span lang="${localeTags[lang]}">${localeNames[lang]}</span>${icon("chevron-down")}</button><div id="language-menu" role="menu" aria-label="${t("language")}" hidden>${choices}</div></div>`;
-  const header = `<a class="skip-link" href="#main">${t("skip")}</a><header class="masthead"><div class="wrap mast-inner"><div class="brand-group"><a class="brand" href="${link("index.html")}"><span class="brand-name">FionViber</span></a><div class="brand-meta"><span class="tagline">${t("tag")}</span>${language}</div></div><button class="search-toggle" type="button" aria-controls="search-form" aria-expanded="false" aria-label="${t("search")}" data-open-label="${t("search")}" data-close-label="${t("close")}">${searchIcon}${icon("x")}</button><form class="search-form" id="search-form" role="search" action="${link("search.html")}" method="get"><input type="hidden" name="lang" value="${lang}"><label class="sr-only" for="query">${t("searchLabel")}</label><input id="query" name="q" type="search" maxlength="120" placeholder="${t("searchLabel")}" value="${esc(params.get("q") || "")}"><button class="search-submit" type="submit" aria-label="${t("search")}">${searchIcon}</button></form></div><nav class="main-nav" aria-label="${t("navigation")}"><div class="wrap nav-inner">${navItem("home", "index.html")}${navItem("tools", "tools.html")}${navItem("games", "games.html")}${navItem("about", "about.html")}</div></nav></header>`;
+  const header = `<a class="skip-link" href="#main">${t("skip")}</a><header class="masthead"><div class="wrap mast-inner"><div class="brand-group"><a class="brand" href="${link("index.html")}"><span class="brand-name">FionViber</span></a><p class="tagline">${t("tag")}</p></div><button class="search-toggle" type="button" aria-controls="search-form" aria-expanded="false" aria-label="${t("search")}" data-open-label="${t("search")}" data-close-label="${t("close")}">${searchIcon}${icon("x")}</button><form class="search-form" id="search-form" role="search" action="${link("search.html")}" method="get"><input type="hidden" name="lang" value="${lang}"><label class="sr-only" for="query">${t("searchLabel")}</label><input id="query" name="q" type="search" maxlength="120" placeholder="${t("searchLabel")}" value="${esc(params.get("q") || "")}"><button class="search-submit" type="submit" aria-label="${t("search")}">${searchIcon}</button></form>${language}</div><nav class="main-nav" aria-label="${t("navigation")}"><div class="wrap nav-inner">${navItem("home", "index.html")}${navItem("tools", "tools.html")}${navItem("games", "games.html")}${navItem("about", "about.html")}</div></nav></header>`;
   const footer = `<footer><div class="wrap footer-main"><a class="footer-brand" href="${link("index.html")}">FionViber</a><a href="https://github.com/FionViber" target="_blank" rel="noopener noreferrer">${t("github")} ${arrow}</a><span>© 2026 FionViber</span></div></footer>`;
+  const sectionHeading = (key) => `<header class="page-heading section-heading"><h1>${t(key)}</h1></header>`;
   let content = "",
     title = "FionViber";
   if (page === "home") {
-    content = `<section class="hero welcome"><h1>${t("intro")}</h1><p>${t("introText")}</p><p>${t("introGuide")}</p></section>`;
+    content = `${sectionHeading("home")}<section class="prose"><h2>${t("intro")}</h2><p>${t("introText")}</p><p>${t("introGuide")}</p></section>`;
   } else if (page === "tool" || page === "game") {
     const key = page === "tool" ? "tools" : "games";
     title = t(key);
-    content = `<header class="page-heading"><h1>${t(key)}</h1><p>${t(key + "Text")}</p></header><div class="project-grid">${P.filter(
+    content = `${sectionHeading(key)}<div class="project-grid">${P.filter(
       (p) => p.category === page,
     )
       .map(card)
@@ -62,7 +63,7 @@ export function renderPage(view, projects, baseURL) {
     content = `<header class="page-heading"><h1>${query ? t("results") : t("prompt")}</h1>${query ? `<p>${t("for")} “${esc(query)}” · ${matches.length} ${lang === "en" && matches.length === 1 ? "project" : t("projects")}</p><a class="text-link" href="${link("search.html")}">${t("clear")}</a>` : `<p>${t("try")}</p>`}</header>${query && matches.length ? `<div class="project-grid">${matches.map(card).join("")}</div>` : query ? `<section class="empty"><h2>${t("none")}</h2><p>${t("try")}</p><a href="${link("index.html")}">${icon("arrow-left")} ${t("back")}</a></section>` : ""}`;
   } else if (page === "about") {
     title = t("about");
-    content = `<article class="prose"><h1>${t("aboutTitle")}</h1><p>${t("aboutText")}</p><h2>${t("start")}</h2><p>${t("aboutUse")}</p><h2>${t("source")}</h2><p>${t("aboutSource")}</p><a class="button" href="https://github.com/FionViber" target="_blank" rel="noopener noreferrer">${t("github")} ${arrow}</a></article>`;
+    content = `${sectionHeading("about")}<article class="prose"><h2>${t("aboutTitle")}</h2><p>${t("aboutText")}</p><h2>${t("start")}</h2><p>${t("aboutUse")}</p><h2>${t("source")}</h2><p>${t("aboutSource")}</p><a class="button" href="https://github.com/FionViber" target="_blank" rel="noopener noreferrer">${t("github")} ${arrow}</a></article>`;
   }
   if (!content) {
     title = t("notFound");
