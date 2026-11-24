@@ -231,7 +231,7 @@ h3 {
 }
 #language:focus, #language[aria-expanded="true"] {
   outline: 2px solid var(--link);
-  outline-offset: 0;
+  outline-offset: -2px;
 }
 #language .icon-chevron-down { width: .875rem; margin-inline-start: auto; }
 #language-menu {
@@ -270,7 +270,7 @@ html:not([data-enhanced]) :is(.search-form, .language-control) {
 
 .search-form:focus-within {
   outline: 2px solid var(--link);
-  outline-offset: 0;
+  outline-offset: -2px;
 }
 
 .search-form input[type="search"] {
