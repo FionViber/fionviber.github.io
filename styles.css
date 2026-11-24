@@ -164,15 +164,18 @@ h3 {
 }
 
 .mast-inner {
-  display: flex;
-  min-height: 124px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "brand search" "brand locale";
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
+  align-content: center;
+  gap: 8px 24px;
+  min-height: 124px;
   padding-block: 16px;
 }
 
 .brand-group {
+  grid-area: brand;
   min-width: 0;
 }
 
@@ -192,16 +195,8 @@ h3 {
   letter-spacing: -0.035em;
 }
 
-.brand-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 16px;
-  margin-top: 4px;
-}
-
 .tagline {
-  margin: 0;
+  margin-top: 4px;
   color: var(--muted);
   font-size: .875rem;
 }
@@ -213,7 +208,13 @@ h3 {
   vertical-align: -.18em;
   pointer-events: none;
 }
-.language-control { position: relative; max-width: 100%; }
+.language-control {
+  grid-area: locale;
+  justify-self: end;
+  position: relative;
+  inline-size: 9rem;
+  max-inline-size: 100%;
+}
 #language, #language-menu button {
   display: flex;
   align-items: center;
@@ -238,8 +239,7 @@ h3 {
   z-index: 10;
   inset-inline-start: 0;
   inset-block-start: calc(100% + 4px);
-  min-width: max(100%, 10rem);
-  max-width: calc(100vw - 2rem);
+  width: 100%;
   background: var(--surface);
   border: 1px solid #768897;
   padding: 2px;
@@ -259,6 +259,8 @@ html:not([data-enhanced]) :is(.search-form, .language-control) {
 }
 
 .search-form {
+  grid-area: search;
+  justify-self: end;
   display: flex;
   align-items: stretch;
   border: 1px solid #768897;
@@ -351,24 +353,11 @@ main {
   padding-block: 40px 64px;
 }
 
-.hero,
 .detail,
 .prose,
 .empty {
   border: 1px solid var(--line);
   background: var(--surface);
-}
-
-.hero {
-  padding: 40px;
-}
-
-.hero > p:not(.eyebrow) {
-  max-width: 740px;
-  margin-top: 18px;
-  color: var(--muted);
-  font-size: 18px;
-  line-height: 1.7;
 }
 
 .eyebrow {
@@ -473,6 +462,8 @@ main {
   padding-block: 8px 32px;
 }
 
+.section-heading { text-align: center; }
+
 .page-heading > p:not(.eyebrow) {
   max-width: 760px;
   margin-top: 16px;
@@ -503,7 +494,6 @@ main {
 }
 
 .detail h1,
-.prose h1,
 .empty h1 {
   max-width: 900px;
   overflow-wrap: anywhere;
@@ -591,6 +581,7 @@ main {
 
 .prose {
   max-width: 850px;
+  margin-inline: auto;
 }
 
 .prose > p:not(.eyebrow) {
@@ -598,9 +589,8 @@ main {
   color: var(--muted);
 }
 
-.prose h2 {
-  margin-top: 30px;
-}
+.prose h2 { margin-top: 30px; }
+.prose h2:first-child { margin-top: 0; }
 
 .empty p {
   margin-block: 18px;
@@ -651,10 +641,12 @@ footer {
 
 @media (max-width: 620px) {
   .mast-inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "brand toggle" "brand locale";
     min-height: 120px;
-    gap: 12px;
+    gap: 8px 12px;
+  }
+  .mast-inner:has(.search-form.is-open) {
+    grid-template-areas: "brand toggle" "search search" "locale locale";
   }
   .brand-name {
     font-size: 26px;
@@ -663,13 +655,15 @@ footer {
     display: none;
   }
   html[data-enhanced] .search-toggle {
+    grid-area: toggle;
+    justify-self: end;
     display: grid;
     border: 1px solid #768897;
   }
   .search-form { display: none; }
   .search-form.is-open {
     display: flex;
-    grid-column: 1 / -1;
+    justify-self: stretch;
   }
   .search-form input[type="search"] { font-size: 1rem; }
   .nav-inner {
@@ -685,14 +679,10 @@ footer {
   .project-grid {
     grid-template-columns: 1fr;
   }
-  .hero,
   .detail,
   .prose,
   .empty {
     padding: 26px 22px;
-  }
-  .hero > p:not(.eyebrow) {
-    font-size: 16px;
   }
   .project-card {
     padding: 22px;
